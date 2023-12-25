@@ -75,6 +75,8 @@ public class CalculatorApp extends AppCompatActivity {
         } else if (view.getId() == R.id.equals_button) {
 
             if(isFirstInput){
+                result = 0;
+                operator = '+';
                 clearText();
             } else {
 //                int lastNum = Integer.parseInt(display.getText().toString());
@@ -82,7 +84,6 @@ public class CalculatorApp extends AppCompatActivity {
                 display.setText(String.valueOf(result));
                 isFirstInput = true;
             }
-
         }
     }
 
@@ -92,6 +93,8 @@ public class CalculatorApp extends AppCompatActivity {
         Button getButton = findViewById(view.getId());
 
         if (view.getId() == R.id.all_clear_button) {
+            result = 0;
+            operator = '+';
             clearText();
 
             // Toggle the sign of the displayed number
@@ -110,6 +113,10 @@ public class CalculatorApp extends AppCompatActivity {
             } else {
                 clearText();
             }
+
+
+        } else if (view.getId() == R.id.button_decimal) {
+            // TODO: Update needed.
         }
     }
 
@@ -150,7 +157,6 @@ public class CalculatorApp extends AppCompatActivity {
 
     public void clearText() {
         isFirstInput = true;
-        result = 0;
         display.setTextColor(0xFF949194);
         display.setText(CLEAR_VALUE);
     }
