@@ -19,7 +19,6 @@
  * -----------------------------------------------------------------------------
  */
 
-
 package com.eojin.calculator;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -151,9 +150,9 @@ public class CalculatorApp extends AppCompatActivity {
 
     public void clearText() {
         isFirstInput = true;
+        result = 0;
         display.setTextColor(0xFF949194);
         display.setText(CLEAR_VALUE);
-
     }
 
 }
