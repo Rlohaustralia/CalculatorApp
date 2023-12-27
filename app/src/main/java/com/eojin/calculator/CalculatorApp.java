@@ -13,7 +13,7 @@
  * Date            Author          Description
  * -----------------------------------------------------------------------------
  * 25 Dec 2023     Eojin Ra       Initial version
- * TODO: Implement error handling.
+ * 27 Dec 2023     Eojin Ra       Error handling
  * TODO: Add support for decimal points in input.
  * TODO: Implement the calculation process at the top.
  * -----------------------------------------------------------------------------
