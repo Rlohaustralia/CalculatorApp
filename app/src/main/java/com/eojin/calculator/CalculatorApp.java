@@ -28,6 +28,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 public class CalculatorApp extends AppCompatActivity {
 
 
@@ -68,7 +70,6 @@ public class CalculatorApp extends AppCompatActivity {
                 operator = getButton.getText().toString().charAt(0);
                 display.setText(String.valueOf(result));
                 isFirstInput = true;
-
             }
 
 
@@ -79,7 +80,6 @@ public class CalculatorApp extends AppCompatActivity {
                 operator = '+';
                 clearText();
             } else {
-//                int lastNum = Integer.parseInt(display.getText().toString());
                 result = calculate(result, Integer.parseInt(display.getText().toString()), operator);
                 display.setText(String.valueOf(result));
                 isFirstInput = true;
@@ -104,13 +104,23 @@ public class CalculatorApp extends AppCompatActivity {
             currentNum = -currentNum;
             display.setText(String.valueOf(currentNum));
 
+            if(isFirstInput) {
+                result = currentNum;
+            } else {
+                result = 0;
+            }
+
+
 
         } else if (view.getId() == R.id.back_space_button) {
-            if (display.getText().toString().length() > 1) {
-                String getResult = display.getText().toString();
+            String getResult = display.getText().toString();
+
+            if (getResult.length() > 1) {
                 String substring = getResult.substring(0,getResult.length()-1);
+                result = Integer.parseInt(substring);
                 display.setText(substring);
             } else {
+                result = 0;
                 clearText();
             }
 
@@ -141,7 +151,7 @@ public class CalculatorApp extends AppCompatActivity {
     }
 
 
-    // Set text when numButtons are clicked
+
     public void setText(Button clickButton) {
         if(isFirstInput) {
             // Read which button user clicked
