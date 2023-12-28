@@ -14,8 +14,8 @@
  * -----------------------------------------------------------------------------
  * 25 Dec 2023     Eojin Ra       Initial version
  * 27 Dec 2023     Eojin Ra       Error handling
+ * 28 Dec 2023     Eojin Ra       Added the function of showing calculation process
  * TODO: Add support for decimal points in input.
- * TODO: Implement the calculation process at the top.
  * -----------------------------------------------------------------------------
  */
 
@@ -34,6 +34,7 @@ public class CalculatorApp extends AppCompatActivity {
 
 
     TextView display;
+    TextView calculation_process;
     boolean isFirstInput = true;
     char operator = '+';
     int result = 0;
@@ -45,12 +46,14 @@ public class CalculatorApp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         display = findViewById(R.id.display);
+        calculation_process = findViewById(R.id.calculation_process);
     }
 
 
     public void numButton(View view) {
         Button getButton = findViewById(view.getId());
         setText(getButton);
+        calculationProcess(getButton);
     }
 
     public void operatorButton(View view) {
@@ -61,15 +64,16 @@ public class CalculatorApp extends AppCompatActivity {
             || view.getId() == R.id.multiplication_button
             || view.getId() == R.id.division_button) {
 
-
             if(isFirstInput) {
                 operator = getButton.getText().toString().charAt(0);
+                calculationProcess(getButton);
             } else {
                 int lastNum = Integer.parseInt(display.getText().toString());
                 result = calculate(result, lastNum, operator);
                 operator = getButton.getText().toString().charAt(0);
                 display.setText(String.valueOf(result));
                 isFirstInput = true;
+                calculationProcess(getButton);
             }
 
 
@@ -83,6 +87,7 @@ public class CalculatorApp extends AppCompatActivity {
                 result = calculate(result, Integer.parseInt(display.getText().toString()), operator);
                 display.setText(String.valueOf(result));
                 isFirstInput = true;
+                calculation_process.setText(String.valueOf(result));
             }
         }
     }
@@ -90,19 +95,23 @@ public class CalculatorApp extends AppCompatActivity {
 
 
     public void functionButton(View view) {
+
         Button getButton = findViewById(view.getId());
 
         if (view.getId() == R.id.all_clear_button) {
+
             result = 0;
             operator = '+';
             clearText();
 
             // Toggle the sign of the displayed number
         } else if (view.getId() == R.id.change_sign_button) {
+
             String currentText = display.getText().toString();
             int currentNum = Integer.parseInt(currentText);
             currentNum = -currentNum;
             display.setText(String.valueOf(currentNum));
+            calculation_process.setText(String.valueOf(currentNum));
 
             if(isFirstInput) {
                 result = currentNum;
@@ -113,12 +122,13 @@ public class CalculatorApp extends AppCompatActivity {
 
 
         } else if (view.getId() == R.id.back_space_button) {
-            String getResult = display.getText().toString();
 
+            String getResult = display.getText().toString();
             if (getResult.length() > 1) {
                 String substring = getResult.substring(0,getResult.length()-1);
                 result = Integer.parseInt(substring);
                 display.setText(substring);
+                calculation_process.setText(substring);
             } else {
                 result = 0;
                 clearText();
@@ -153,7 +163,9 @@ public class CalculatorApp extends AppCompatActivity {
 
 
     public void setText(Button clickButton) {
+
         if(isFirstInput) {
+
             // Read which button user clicked
             display.setTextColor(0xFF000000); // Set text color in black when it is clicked
             display.setText(clickButton.getText().toString());
@@ -166,9 +178,21 @@ public class CalculatorApp extends AppCompatActivity {
 
 
     public void clearText() {
+
         isFirstInput = true;
         display.setTextColor(0xFF949194);
         display.setText(CLEAR_VALUE);
+        calculation_process.setTextColor(0xFF949194);
+        calculation_process.setText(CLEAR_VALUE);
     }
 
+    public void calculationProcess(Button clickButton) {
+
+        String checkZero = calculation_process.getText().toString();
+        if(checkZero.equals("0")) {
+            calculation_process.setText(clickButton.getText().toString());
+        } else {
+            calculation_process.append(clickButton.getText().toString());
+        }
+    }
 }
