@@ -30,6 +30,8 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.text.DecimalFormat;
+
 public class CalculatorApp extends AppCompatActivity {
 
 
@@ -39,6 +41,9 @@ public class CalculatorApp extends AppCompatActivity {
     char operator = '+';
     int result = 0;
     final String CLEAR_VALUE = "0";
+    DecimalFormat decimalFormat = new DecimalFormat("###,###.#####");
+
+
 
 
     @Override
@@ -60,9 +65,9 @@ public class CalculatorApp extends AppCompatActivity {
         Button getButton = findViewById(view.getId());
 
         if (view.getId() == R.id.addition_button
-            || view.getId() == R.id.subtraction_button
-            || view.getId() == R.id.multiplication_button
-            || view.getId() == R.id.division_button) {
+                || view.getId() == R.id.subtraction_button
+                || view.getId() == R.id.multiplication_button
+                || view.getId() == R.id.division_button) {
 
             if(isFirstInput) {
                 operator = getButton.getText().toString().charAt(0);
@@ -172,9 +177,19 @@ public class CalculatorApp extends AppCompatActivity {
             isFirstInput = false;
 
         } else {
-            display.append(clickButton.getText().toString());
+//            display.append(clickButton.getText().toString());
+            String getDisplay = display.getText().toString().replace(",","");
+            getDisplay = getDisplay + clickButton.getText().toString();
+            String getDecimalString = getDecimalString(getDisplay);
+            display.setText(getDecimalString);
         }
     }
+
+    public String getDecimalString (String changeString) {
+        String setChangeString = changeString.replace(",","");
+        return decimalFormat.format(Double.parseDouble(setChangeString));
+    }
+
 
 
     public void clearText() {
