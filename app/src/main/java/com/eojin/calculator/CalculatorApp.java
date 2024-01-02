@@ -70,29 +70,36 @@ public class CalculatorApp extends AppCompatActivity {
                 || view.getId() == R.id.division_button) {
 
             if(isFirstInput) {
+
                 operator = getButton.getText().toString().charAt(0);
                 calculationProcess(getButton);
+
             } else {
-                int lastNum = Integer.parseInt(display.getText().toString());
+                String tempStr = getIntegerString(display.getText().toString());
+                int lastNum = Integer.parseInt(tempStr);
                 result = calculate(result, lastNum, operator);
                 operator = getButton.getText().toString().charAt(0);
-                display.setText(String.valueOf(result));
-                isFirstInput = true;
+                display.setText(getDecimalString(String.valueOf(result)));
                 calculationProcess(getButton);
+                isFirstInput = true;
+
             }
 
 
         } else if (view.getId() == R.id.equals_button) {
 
             if(isFirstInput){
+
                 result = 0;
                 operator = '+';
                 clearText();
+
             } else {
-                result = calculate(result, Integer.parseInt(display.getText().toString()), operator);
-                display.setText(String.valueOf(result));
+                String tempStr = getIntegerString(display.getText().toString());
+                result = calculate(result, Integer.parseInt(tempStr), operator);
+                display.setText(getDecimalString(String.valueOf(result)));
+                calculation_process.setText(getDecimalString(String.valueOf(result)));
                 isFirstInput = true;
-                calculation_process.setText(String.valueOf(result));
             }
         }
     }
@@ -112,11 +119,11 @@ public class CalculatorApp extends AppCompatActivity {
             // Toggle the sign of the displayed number
         } else if (view.getId() == R.id.change_sign_button) {
 
-            String currentText = display.getText().toString();
+            String currentText = getIntegerString(display.getText().toString());
             int currentNum = Integer.parseInt(currentText);
             currentNum = -currentNum;
-            display.setText(String.valueOf(currentNum));
-            calculation_process.setText(String.valueOf(currentNum));
+            display.setText(getDecimalString(String.valueOf(currentNum)));
+            calculation_process.setText(getDecimalString(String.valueOf(currentNum)));
 
             if(isFirstInput) {
                 result = currentNum;
@@ -128,20 +135,17 @@ public class CalculatorApp extends AppCompatActivity {
 
         } else if (view.getId() == R.id.back_space_button) {
 
-            String getResult = display.getText().toString();
+            String getResult = getIntegerString(display.getText().toString());
             if (getResult.length() > 1) {
                 String substring = getResult.substring(0,getResult.length()-1);
                 result = Integer.parseInt(substring);
-                display.setText(substring);
-                calculation_process.setText(substring);
+                display.setText(getDecimalString(substring));
+                calculation_process.setText(getDecimalString(substring));
+                result = 0;
             } else {
                 result = 0;
                 clearText();
             }
-
-
-        } else if (view.getId() == R.id.button_decimal) {
-            // TODO: Update needed.
         }
     }
 
@@ -170,14 +174,14 @@ public class CalculatorApp extends AppCompatActivity {
     public void setText(Button clickButton) {
 
         if(isFirstInput) {
-
+            
             // Read which button user clicked
             display.setTextColor(0xFF000000); // Set text color in black when it is clicked
             display.setText(clickButton.getText().toString());
             isFirstInput = false;
 
         } else {
-//            display.append(clickButton.getText().toString());
+            
             String getDisplay = display.getText().toString().replace(",","");
             getDisplay = getDisplay + clickButton.getText().toString();
             String getDecimalString = getDecimalString(getDisplay);
@@ -185,11 +189,16 @@ public class CalculatorApp extends AppCompatActivity {
         }
     }
 
-    public String getDecimalString (String changeString) {
-        String setChangeString = changeString.replace(",","");
-        return decimalFormat.format(Double.parseDouble(setChangeString));
+
+    public String getDecimalString (String thousandSeparator) {
+
+        String setDeciamlString = thousandSeparator.replace(",","");
+        return decimalFormat.format(Double.parseDouble(setDeciamlString));
     }
 
+    public String getIntegerString (String intString) {
+        return intString.replace(",","");
+    }
 
 
     public void clearText() {
@@ -201,10 +210,12 @@ public class CalculatorApp extends AppCompatActivity {
         calculation_process.setText(CLEAR_VALUE);
     }
 
+
     public void calculationProcess(Button clickButton) {
 
         String checkZero = calculation_process.getText().toString();
-        if(checkZero.equals("0")) {
+
+        if (checkZero.equals("0")) {
             calculation_process.setText(clickButton.getText().toString());
         } else {
             calculation_process.append(clickButton.getText().toString());
