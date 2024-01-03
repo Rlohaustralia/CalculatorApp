@@ -101,6 +101,7 @@ public class CalculatorApp extends AppCompatActivity {
                 calculation_process.setText(getDecimalString(String.valueOf(result)));
                 isFirstInput = true;
             }
+
         }
     }
 
@@ -145,6 +146,20 @@ public class CalculatorApp extends AppCompatActivity {
             } else {
                 result = 0;
                 clearText();
+            }
+
+        } else if (view.getId() == R.id.button_decimal) {
+
+            if (isFirstInput) {
+                display.setTextColor(0xFF000000);
+                display.setText("0.");
+                calculation_process.setText("0.");
+                isFirstInput = false;
+
+            } else {
+                display.append(".");
+                calculation_process.append(".");
+
             }
         }
     }
