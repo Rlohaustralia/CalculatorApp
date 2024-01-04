@@ -10,3 +10,8 @@ A simple Android calculator app with basic arithmetic operations and additional 
 - Backspace button for deleting the last digit.
 - Decimal point support for decimal input.
 - Thousand Separator support for better readability.
+
+# Improvements
+- User interface needs to be updated for a more intuitive user experience.
+- Display an error message to inform the user when it's invalid input.
+- Improved code readability.
