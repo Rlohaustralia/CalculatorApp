@@ -1,1 +1,1 @@
-https://github.com/Rlohaustralia/CalculatorApp/blob/main/demo.webm
+![Demo](https://github.com/Rlohaustralia/CalculatorApp/raw/main/demo.webm)
