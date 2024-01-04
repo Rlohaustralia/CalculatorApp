@@ -50,7 +50,8 @@
             android:padding="5dp"
             android:text="0"
             android:textSize="50sp"
-            android:textColor="#6D6D6D"/>
+            android:textColor="#6D6D6D"
+            tools:ignore="RtlHardcoded" />
 
     </LinearLayout>
 
