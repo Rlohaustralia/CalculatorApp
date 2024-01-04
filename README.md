@@ -1,3 +1,4 @@
+# Calculator App
 A simple Android calculator app with basic arithmetic operations and additional functionalities.
 
 # Demo
